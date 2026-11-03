@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ta"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>💌 Unakkaga</title>
+<style>
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;color:#fff;font-family:"Noto Sans Tamil","Latha",system-ui,sans-serif}
+body{background:radial-gradient(circle at 50% 0,#5b1a4a,#1a0a1f 70%)}
+.s{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;opacity:0;pointer-events:none;transition:opacity .8s;z-index:2;overflow:hidden}
+.s.on{opacity:1;pointer-events:auto}
+h1{font-size:2.4rem;line-height:1.2;margin:10px 0}h2{font-size:1.4rem;margin-bottom:8px}
+p{opacity:.88;line-height:1.6;margin:6px 0}
+.pk{background:linear-gradient(90deg,#ff5fa2,#ffb36b);-webkit-background-clip:text;background-clip:text;color:transparent}
+.btn{margin-top:18px;padding:13px 28px;border:0;border-radius:30px;font-size:1.05rem;font-weight:700;color:#fff;background:linear-gradient(90deg,#ff4f8b,#ff8a5c);box-shadow:0 6px 20px #ff4f8b66;cursor:pointer}
+.small{font-size:.8rem;letter-spacing:2px;opacity:.75}
+#cv{position:fixed;inset:0;pointer-events:none;z-index:80}
+#mu{position:fixed;top:12px;right:12px;z-index:90;width:40px;height:40px;border-radius:50%;border:0;background:#ffffff22;color:#fff;font-size:1.1rem}
+.fh{position:fixed;bottom:-30px;animation:up 6s linear forwards;pointer-events:none;z-index:1}
+@keyframes up{to{transform:translateY(-110vh) rotate(30deg);opacity:0}}
+@keyframes bt{50%{transform:scale(1.15)}}
+@keyframes in{from{opacity:0;transform:translateY(10px)}}
+/* hook */
+#hrt{animation:bt 1.2s infinite;filter:drop-shadow(0 0 22px #ff4f9a99);margin:14px 0}
+#bw{position:absolute;left:5%;bottom:13%;width:120px;touch-action:none;cursor:grab}
+#ia{transition:transform .15s}
+/* wave: mela irundhu kela */
+#wv{position:absolute;inset:0;z-index:-1;background:linear-gradient(#ffffff14 1px,transparent 1px) 0 0/36px 36px,linear-gradient(90deg,#ffffff14 1px,transparent 1px) 0 0/36px 36px,linear-gradient(#b8125a,#e0307a);transform:translateY(-100%);transition:transform 1.9s cubic-bezier(.2,.8,.2,1)}
+#wv:after{content:"";position:absolute;left:0;right:0;bottom:-58px;height:60px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 60' preserveAspectRatio='none'%3E%3Cpath d='M0 0H400V28Q350 58 300 28T200 28T100 28T0 28Z' fill='%23e0307a'/%3E%3C/svg%3E") repeat-x;background-size:400px 60px;animation:wm 3s linear infinite}
+@keyframes wm{to{background-position-x:400px}}
+#s1.on #wv{transform:none}
+#s1.cr #wv{background:linear-gradient(#fff6f2,#ffd9e6)}#s1.cr #wv:after{opacity:0}#s1.cr{color:#b0285f}
+.t2,#tree{display:none}#s1.cr .t1{display:none}#s1.cr #tree,#s1.cr p.t2{display:block}#s1.cr button.t2{display:inline-block}
+#tree{width:min(90vw,350px)}
+#tree g.rg{transform-origin:150px 140px;animation:pp .9s cubic-bezier(.3,1.5,.5,1) both}
+@keyframes pp{from{transform:scale(0);opacity:0}}
+.s:not(.on) *{animation-play-state:paused!important}
+/* balloons */
+#bls{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin:14px 0}
+.bl{cursor:pointer;animation:fl 3s ease-in-out infinite;filter:drop-shadow(0 6px 8px #0006)}.bl:nth-child(2n){animation-delay:.6s}
+@keyframes fl{50%{transform:translateY(-12px)}}
+.pop{transform:scale(2);opacity:0;transition:.3s}
+#rs{width:100%;max-width:360px;display:flex;flex-direction:column;gap:8px}
+.r{padding:10px 14px;border-radius:14px;background:#ffffff10;border:1.5px solid;text-align:left;animation:in .5s}.r small{font-size:.65rem;letter-spacing:2px;font-weight:800}
+/* photos */
+#ph{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;width:100%;padding:20px 10%;margin:10px 0}
+.po{flex:0 0 78%;scroll-snap-align:center;background:#fff;color:#444;padding:10px 10px 14px;border-radius:6px;transform:rotate(-2deg);box-shadow:0 10px 30px #0008}
+.po:nth-child(2n){transform:rotate(2deg)}
+.po img,.ph{width:100%;height:46vh;object-fit:cover;border-radius:3px;background:#f3d6e4;display:flex;align-items:center;justify-content:center;font-size:.8rem}
+.po span{display:block;margin-top:8px}
+/* letter, poem */
+#env{font-size:5rem;cursor:pointer;animation:bt 1.4s infinite}
+#lt{display:none;background:#fff7e8;color:#4a3426;border-radius:10px;padding:20px;max-width:380px;width:100%;max-height:62vh;overflow:auto;text-align:left;line-height:1.8;box-shadow:0 10px 40px #0009;white-space:pre-wrap}
+#pm p{font-size:1.2rem;opacity:0;transform:translateY(12px);transition:all 1s;margin:10px 0}#pm p.v{opacity:1;transform:none}
+/* game */
+#sg{padding:0;background:linear-gradient(#12061a,#3b0f3a)}#gcv{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+#gh{position:absolute;top:12px;left:14px;font-weight:800;z-index:3;font-size:.95rem;text-shadow:0 2px 6px #000}
+#gov{position:absolute;inset:0;z-index:5;background:#0c0414e6;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center}
+/* dog */
+#dg{width:min(80vw,320px);height:min(80vw,320px);border-radius:50%;overflow:hidden;border:5px solid #ff7eb6;box-shadow:0 0 40px #ff4f9a88;margin:14px 0;display:flex;align-items:center;justify-content:center;background:#3a1a3a}
+#dg img{width:100%;height:100%;object-fit:cover}
+#dg .em{font-size:6rem;animation:bt 1s infinite}
+/* proposal */
+#yes{transition:transform .35s}#no{background:#ffffff26;box-shadow:none}#msg{min-height:26px;margin-top:14px;color:#ffb3d0}
+/* cake */
+#ck{width:230px;margin:10px auto;opacity:0;transform:translateY(20px);transition:all 1s}#ck.show{opacity:1;transform:none}
+#fl{opacity:0;transform-origin:100px 32px;animation:fk .25s infinite alternate;transition:opacity .5s}
+#ck.lit #fl{opacity:1}#ck.off #fl{opacity:0!important}
+@keyframes fk{to{transform:scale(1.15,1.08) rotate(4deg)}}
+#stars,#bs{position:absolute;inset:0;z-index:-1}.st{position:absolute;border-radius:50%;background:#fff;animation:tw 3s infinite}@keyframes tw{50%{opacity:.15}}
+#mw{position:absolute;z-index:-1;width:170%;height:100px;left:-35%;top:46%;transform:rotate(-28deg);background:linear-gradient(90deg,transparent,#b79bff66,#ff9bd866,#7fd3ff66,transparent);filter:blur(24px)}
+#nb1,#nb2{position:absolute;z-index:-1;width:320px;height:320px;border-radius:50%;filter:blur(30px)}
+#nb1{right:-100px;top:8%;background:radial-gradient(#ff5fa266,transparent 70%)}#nb2{left:-100px;bottom:5%;background:radial-gradient(#4f7bff66,transparent 70%)}
+#moon{position:absolute;z-index:-1;top:8%;left:7%;width:86px;height:86px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fffdf0,#e6dfc4 60%,#b3ab90);box-shadow:0 0 40px 10px #fff3c055,0 0 90px 30px #fff3c022}
+#moon i{position:absolute;border-radius:50%;background:radial-gradient(#0000002a,#0000000d)}
+#ss{position:absolute;top:3%;right:-12%;width:190px;height:120px;z-index:4;cursor:pointer;animation:shoot 5s linear 1.2s infinite;opacity:0}
+#ss b{position:absolute;left:0;top:50px;width:150px;height:3px;border-radius:3px;background:linear-gradient(90deg,#fff,#fff0);transform:rotate(-31deg);transform-origin:left center;box-shadow:0 0 10px #fff}
+#ss b:before{content:"";position:absolute;left:-4px;top:-4px;width:11px;height:11px;border-radius:50%;background:#fff;box-shadow:0 0 14px 6px #ffe9a8}
+@keyframes shoot{0%{transform:translate(0,0);opacity:0}8%{opacity:1}92%{opacity:1}100%{transform:translate(-125vw,72vh);opacity:0}}
+#xt,#xs,#cd{position:relative}#xt{font-size:1.7rem;margin-bottom:6px}
+#cd{font-size:7rem;font-weight:800;color:#ffd36b;text-shadow:0 0 30px #ffb300;line-height:1.1}
+</style></head><body>
+<canvas id="cv"></canvas><audio id="bgm" loop></audio><button id="mu">🔊</button>
+
+<section class="s on" id="s0" style="background:linear-gradient(#fff6f2,#ffd3e3);color:#b0285f"><p class="small">UNAKKAGA ORU CHINNA VISHAYAM</p>
+<svg id="hrt" viewBox="-6 -6 112 100" width="150"><defs><radialGradient id="g" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#ffc2dc"/><stop offset=".35" stop-color="#ff4f9a"/><stop offset="1" stop-color="#c2085c"/></radialGradient></defs><path d="M50 88C10 60 0 35 0 22 0 8 12 0 25 0 37 0 46 8 50 16 54 8 63 0 75 0 88 0 100 8 100 22 100 35 90 60 50 88Z" fill="url(#g)"/><ellipse cx="27" cy="20" rx="13" ry="8" fill="#fff" opacity=".7" transform="rotate(-30 27 20)"/></svg>
+<div id="bw"><svg viewBox="0 0 120 120" width="120"><path d="M38 8Q112 60 38 112" fill="none" stroke="#7a4a35" stroke-width="5" stroke-linecap="round"/><path d="M38 8L38 112" stroke="#d9b99b" stroke-width="1.5"/><g id="ia"><path d="M30 60H104" stroke="#7a4a35" stroke-width="3"/><path d="M104 54L118 60 104 66Z" fill="#e0306f"/><path d="M30 60L22 52M30 60L22 68M38 60L30 52M38 60L30 68" stroke="#ff5f9a" stroke-width="3" stroke-linecap="round"/></g></svg></div>
+<p class="small" style="position:absolute;bottom:6%">PULL &amp; RELEASE</p></section>
+
+<section class="s" id="s1"><div id="wv"></div><p class="small t1" style="color:#ffd2e4">make a wish…</p><h1 class="t1" style="font-size:3.4rem;color:#fff">I Love<br>You</h1><div class="t1" style="width:130px;height:4px;background:#ffd36b;border-radius:4px;margin:4px 0 12px"></div><p class="t1" id="n1" style="color:#ffe3ee"></p>
+<svg id="tree" viewBox="0 0 300 330"></svg><p class="t2" style="font-size:1.15rem;font-weight:700">Nee vandha piragu dhaan en life ivlo azhagu 🎈</p>
+<button class="btn t1" onclick="tree()">Thodaru 💗</button><button class="btn t2" onclick="next()">Innum irukku 💕</button></section>
+
+<section class="s" id="sb"><div id="bs"></div><h2>Balloon-ah udai 🎈</h2><p>Ovvonnulayum unna love panra oru reason</p><div id="bls"></div><div id="rs"></div><button class="btn" id="b2" style="display:none" onclick="next()">Innum irukku 💕</button></section>
+
+<section class="s"><h2>Namma memory lane 📸</h2><p>swipe pannu →</p><div id="ph"></div><button class="btn" onclick="next()">Keep going ✨</button></section>
+
+<section class="s"><div id="env" onclick="openLetter()">💌</div><p id="ep">Thirakka thotu</p><div id="lt" onclick="skipType()"></div><button class="btn" id="b4" style="display:none" onclick="next()">Adhuthu 🥹</button></section>
+
+<section class="s" id="sg"><canvas id="gcv"></canvas><div id="gh"></div><div id="gov"><h2 id="got"></h2><p id="gop" style="max-width:320px"></p><button class="btn" id="gob"></button></div></section>
+
+<section class="s"><h2>Oru surprise guest 🐶</h2><div id="dg"></div><p id="dc"></p><button class="btn" onclick="next()">Last question 💍</button></section>
+
+<section class="s" id="sq"><div style="font-size:4rem">💍</div><h1 id="q" class="pk"></h1><p>Nalla yosichu sollu 🥺</p>
+<div><button class="btn" id="yes" onclick="accept()">Aama 💖</button> <button class="btn" id="no">Illa</button></div><div id="msg"></div></section>
+
+<section class="s" id="sc"><h2 id="ct">First things first 🎂</h2>
+<svg id="ck" viewBox="0 0 200 170"><ellipse cx="100" cy="152" rx="96" ry="10" fill="#fff" opacity=".3"/><rect x="28" y="104" width="144" height="46" rx="9" fill="#e95d99"/><rect x="28" y="124" width="144" height="4" fill="#c93a7a" opacity=".45"/><rect x="28" y="94" width="144" height="18" rx="9" fill="#fff6f8"/><g fill="#fff6f8"><ellipse cx="42" cy="112" rx="7" ry="9"/><ellipse cx="70" cy="112" rx="7" ry="13"/><ellipse cx="98" cy="112" rx="7" ry="8"/><ellipse cx="126" cy="112" rx="7" ry="12"/><ellipse cx="156" cy="112" rx="7" ry="9"/></g><rect x="52" y="64" width="96" height="34" rx="8" fill="#f47fb2"/><rect x="52" y="58" width="96" height="14" rx="7" fill="#fff6f8"/><g fill="#fff6f8"><ellipse cx="66" cy="72" rx="6" ry="8"/><ellipse cx="92" cy="72" rx="6" ry="11"/><ellipse cx="120" cy="72" rx="6" ry="8"/><ellipse cx="138" cy="72" rx="6" ry="10"/></g><rect x="96" y="32" width="8" height="28" rx="2" fill="#ffd36b"/><path d="M96 40l8-4M96 48l8-4M96 56l8-4" stroke="#fff" stroke-width="2"/><g id="fl"><ellipse cx="100" cy="22" rx="6" ry="11" fill="#ffb300"/><ellipse cx="100" cy="25" rx="3" ry="6" fill="#fff6c0"/></g></svg>
+<p id="cm" style="font-size:1rem;margin-top:12px">Baking something sweet…</p></section>
+
+<section class="s" id="sx" style="background:radial-gradient(ellipse at 30% 20%,#2b1b5e,#0a0620 55%,#02010a)"><div id="stars"></div><div id="mw"></div><div id="nb1"></div><div id="nb2"></div>
+<div id="moon"><i style="left:18px;top:22px;width:16px;height:16px"></i><i style="left:50px;top:44px;width:22px;height:22px"></i><i style="left:30px;top:58px;width:9px;height:9px"></i></div>
+<div id="ss" onclick="wish()"><b></b></div>
+<h2 id="xt"></h2><p id="xs"></p><div id="cd"></div><button class="btn" id="vb" style="display:none;position:relative"></button></section>
+
+<section class="s" id="spm"><h2>Unakkaga oru kavithai ✍️</h2><div id="pm"></div><button class="btn" id="b5" style="display:none" onclick="next()">Last surprise 🎆</button></section>
+<section class="s" id="sf"><h1 class="pk">She said YES! 🥹💖</h1><p id="fin" style="font-size:1.1rem;max-width:320px"></p></section>
+
+<script>
+/* ===== CONFIG: inga mattum maathu ===== */
+const C={
+ her:"Chellam", him:"Un peru",
+ music:"music.mp3", voice:"voice.mp3",
+ line:"unnoda irukkura ovvoru nimishamum enakku pidichirukku",
+ reasons:["Nee irundha saadharana naalum special aagidum","Naan marandha chinna vishayamum unakku nabagam irukku","Un sirippu dhaan en favourite sound","Nee pesina en kavalai parandhidum","Un kooda irundha naan nalla manushana aaguren"],
+ photos:[{s:"photos/1.jpg",c:"Namma first day"},{s:"photos/2.jpg",c:"Indha sirippu dhaan…"},{s:"photos/3.jpg",c:"En favourite nee"}],
+ letter:`Anbulla Chellam,
+
+Unna paartha naalla irundhu enakkulla edho maaridichu. Idha epdi solrathunu theriyala, adhan ippadi oru website panninen.
+
+(Naa enna sollanu nu nenachano atha la nethe sollite atha eppa first la irnuthu unna love panlanu mudivu pannite atha eppa propose panre  ena unaku eppa enna pathi ellame therium
+naa oru psycho mental selfish suyanalavathi munnadi iruntha mari care illa naa unna neraya hurt pannuve kasta paduthuve asiga paduthuve romba alugu vaipe naa unaku oru unluck tha un life la
+naa eppa la neraya naal nenachuruke namma romba karupa irukom neeta iruka matrom mature illa decent illa ana nee apdi illa vellaya alaga iruka unaku oru maturetity iruku athunala enna un aalu nu 
+sonna unaku sangatam tha na😔 ena ennikavathu unaku mathavaga solrathu correcu nu thonuchu na anniku ethana naal love pannathu onnume illa ma poirum💔 eppavum solre naa unaku correcta na person illa🩹..,
+unaku enna thonuthu nalla yosi ena naa oru quote padiche you like because you love despite nu unaku enna oru reason ka ga puduchu iruntha athu like ana nee edhir pakura edhume enta illa nu theinja thu ku aprm mu unaku enna puducha athutha love nu solluvaga
+7 stage of love nu solluvaga nearaya peru 6th stage la ye nindruvaga ena antha stage la tha avagala pathi fulla therinjupaga aprm iruka kastama irukunu poiruvaga nammalu antha stage la tha irukom enna pathi unakum unna pathi ennakum fulla therinju 
+rendu peru avagaloda dark side kattito eppa yochichu sollu do you love me?? oru says irukum if Universe give 1 chance antha mari tha enaku kudutha last chance edhu ellarum epdi irunthalum oru naal seruvom adutha sagura varaikum evagloda oru alaga valka valnthuralanu nenapaga
+ana namma love la tha athu nadakathu 🙂 naa ethana naal valuvenu theriyathu ena nerantharam illatha valka apdi valapora entha valkaila adutha rendu varusam en koda irupiya ella situation la um 🫴 sanda podu adi thittu ana vittu mattum pogatha❤️‍🩹...)
+
+En kooda life full-a varuviya? nu enna la keka mudiyathu adutha 2 varusam kooda irupiya🔑🌹?...)
+
+Ippadikku,
+Un ${"sowmi"}`,
+ poem:["என்றாவது நீ என்னை விட்டு சென்றிடுவாய் அன்று ஒரு நொடி திரும்பி பார் உன் நினைவுகள் எனும் பூக்களுடன் நின்று இருப்பேன், ஒரு வேலை அதற்குள் நான் இறந்து விட்டால் அழுகாதே நான் மீண்டும் உனக்காக பிறந்து வருவேன், பிரபஞ்சத்திடம் சொல்லி விட்டேன் அந்த paithiyakariபைத்தியக்காரிடம் சொல்லுங்கள் அழுகவேண்டாம் என்று ஏன் என்றால் நீங்கள் என்னிடம் இருந்து வெறும் உடலை எடுத்து செல்கிறீர்கள் ஏன் என்றால் உயிர் என்னவளிடம் உள்ளது ❤️‍🩹..."],
+ girls:["Priya","Divya","sangeetha","ramya","suba","deva","madhu","yuva","indhu","rasmi","nithisha","gowri","manisha","abi","helina","dharshini","Ramya","Abinaya","Bhuvana","deepa"],
+ won:"Ellaa ponnungalayum thorathiten! Naa eppavume unakku dhaan 💖",
+ dog:"photos/dog.gif", zoom:1.7,
+ q:"En kooda life full-a varuviya?",
+ final:"Inimel ovvoru naalum celebration dhaan 💕 Screenshot eduthu enakku anuppu 📸"
+};
+/* ======================================= */
+const $=id=>document.getElementById(id),S=[...document.querySelectorAll('.s')];let cur=0;
+const bgm=$('bgm');bgm.src=C.music;
+$('mu').onclick=()=>{if(bgm.paused){bgm.play().catch(()=>{});$('mu').textContent='🔊'}else{bgm.pause();$('mu').textContent='🔇'}};
+function go(n){cur=n;S.forEach((e,i)=>e.classList.toggle('on',i==n));const id=S[n].id;
+ if(id=='s1')$('n1').textContent=C.her+", "+C.line;
+ if(id=='spm')poem();if(id=='sg')game();if(id=='sq')$('q').textContent=C.q;if(id=='sc')cake();if(id=='sx')galaxy();if(id=='sf')fire()}
+function next(){go(cur+1)}
+
+/* confetti + fireworks + hearts */
+const cv=$('cv'),cx=cv.getContext('2d');let P=[];
+function rs(){cv.width=innerWidth;cv.height=innerHeight}rs();addEventListener('resize',rs);
+function burst(x,y,n){for(let i=0;i<n;i++)P.push({x,y,vx:(Math.random()-.5)*14,vy:Math.random()*-14-2,c:`hsl(${Math.random()*360},90%,65%)`,s:4+Math.random()*6,l:100+Math.random()*60})}
+function fw(x,y){const h=Math.random()*360;for(let i=0;i<80;i++){const a=Math.random()*6.283,v=Math.random()*6+1;P.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,c:`hsl(${h+Math.random()*40},100%,60%)`,s:2.5,l:70+Math.random()*30,g:.07,r:1})}}
+(function lp(){cx.clearRect(0,0,cv.width,cv.height);P=P.filter(p=>p.l-->0);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=p.g||.35;p.vx*=.99;cx.globalAlpha=p.r?Math.min(1,p.l/30):1;cx.fillStyle=p.c;if(p.r){cx.beginPath();cx.arc(p.x,p.y,p.s,0,6.3);cx.fill()}else cx.fillRect(p.x,p.y,p.s,p.s*.6)});cx.globalAlpha=1;requestAnimationFrame(lp)})();
+setInterval(()=>{const h=document.createElement('div');h.className='fh';h.textContent=['💗','💖','✨','🌸'][Math.random()*4|0];h.style.left=Math.random()*100+'vw';h.style.fontSize=12+Math.random()*20+'px';document.body.appendChild(h);setTimeout(()=>h.remove(),6000)},700);
+
+/* 0: bow */
+const bw=$('bw'),ia=$('ia'),hr=$('hrt');let dr=false,sx=0,sy=0,ang=0;
+function aim(){const b=bw.getBoundingClientRect(),q=hr.getBoundingClientRect();ang=Math.atan2(q.top+q.height/2-(b.top+b.height/2),q.left+q.width/2-(b.left+b.width/2))*180/Math.PI;bw.style.transform=`rotate(${ang}deg)`}
+aim();addEventListener('resize',aim);addEventListener('load',aim);
+bw.onpointerdown=e=>{dr=true;sx=e.clientX;sy=e.clientY;bw.setPointerCapture(e.pointerId)};
+bw.onpointermove=e=>{if(dr)ia.style.transform=`translateX(${-Math.min(30,Math.hypot(e.clientX-sx,e.clientY-sy))}px)`};
+bw.onpointerup=()=>{if(!dr)return;dr=false;bgm.play().catch(()=>{});
+ const r=ia.getBoundingClientRect(),q=hr.getBoundingClientRect(),hx=q.left+q.width/2,hy=q.top+q.height/2,f=document.createElement('div');
+ f.innerHTML='<svg viewBox="0 0 100 20" width="100"><path d="M6 10H88" stroke="#7a4a35" stroke-width="3"/><path d="M88 4L100 10 88 16Z" fill="#e0306f"/><path d="M6 10L0 3M6 10L0 17M13 10L7 3M13 10L7 17" stroke="#ff5f9a" stroke-width="3" stroke-linecap="round"/></svg>';
+ f.style.cssText=`position:fixed;z-index:9;left:${r.left+r.width/2}px;top:${r.top+r.height/2}px;transform:translate(-50%,-50%) rotate(${ang}deg);transition:left .55s ease-in,top .55s ease-in`;
+ document.body.appendChild(f);ia.style.opacity=0;void f.offsetWidth;f.style.left=hx+'px';f.style.top=hy+'px';
+ setTimeout(()=>{f.remove();burst(hx,hy,160);hr.style.animation='none';hr.style.transition='.3s';hr.style.transform='scale(0)';setTimeout(next,600)},600)};
+
+/* 1: glossy heart balloon tree */
+(function(){const pal=[['#ffe3ee','#ff7eb6'],['#ffc2dc','#ff4f9a'],['#fff0c2','#ffb347'],['#ffd9cc','#ff8a7a'],['#ffd1e6','#e8387f'],['#ffe9f2','#ffa0c5'],['#fff6d6','#ffc94d']];
+ let def='<radialGradient id="gl"><stop offset="0" stop-color="#ff7eb6" stop-opacity=".45"/><stop offset="1" stop-color="#ff7eb6" stop-opacity="0"/></radialGradient>',rg=[[],[],[],[],[]],ln='',n=0,t=0;
+ pal.forEach((c,i)=>def+=`<radialGradient id="tg${i}" cx=".33" cy=".28" r=".85"><stop offset="0" stop-color="#fff"/><stop offset=".22" stop-color="${c[0]}"/><stop offset="1" stop-color="${c[1]}"/></radialGradient>`);
+ while(n<150&&t++<6000){const x=Math.random()*2.6-1.3,y=Math.random()*2.5-1.2;if(Math.pow(x*x+y*y-1,3)-x*x*y*y*y>0)continue;
+  const px=150+x*104,py=140-y*104,R=12+Math.random()*5,k=Math.min(4,Math.floor(Math.hypot(x,y)*3.6));
+  ln+=`M${px.toFixed(0)} ${(py+R*1.1).toFixed(0)}L150 292`;
+  rg[k].push(`<ellipse cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" rx="${R}" ry="${R*1.12}" fill="url(#tg${n%7})"/>`);n++}
+ $('tree').innerHTML=`<defs>${def}</defs><circle cx="150" cy="140" r="150" fill="url(#gl)"/><path d="${ln}" stroke="#fff" stroke-opacity=".3" stroke-width=".7" fill="none"/><path d="M150 288Q146 312 150 330" stroke="#a85a72" stroke-width="5" fill="none" stroke-linecap="round"/>`+rg.map((g,i)=>`<g class="rg" style="animation-delay:${i*220}ms">${g.join('')}</g>`).join('')})();
+function tree(){S[1].classList.add('cr');setTimeout(()=>burst(innerWidth/2,innerHeight/3,80),1400)}
+
+/* 2: fantasy balloons */
+const BC=[['#ffd0e4','#ff4f9a'],['#bff5ee','#14b8a6'],['#fff0b3','#f5b301'],['#e3d0ff','#8b5cf6'],['#ffc9b8','#ff6b4a']];let popped=0;
+C.reasons.forEach((t,i)=>{const c=BC[i%5],b=document.createElement('div');b.className='bl';
+ b.innerHTML=`<svg viewBox="0 0 60 110" width="62"><defs><radialGradient id="bg${i}" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="${c[0]}"/><stop offset="1" stop-color="${c[1]}"/></radialGradient></defs><path d="M30 2C50 2 58 20 56 36 54 52 40 62 30 64 20 62 6 52 4 36 2 20 10 2 30 2Z" fill="url(#bg${i})"/><path d="M26 64L34 64 30 71Z" fill="${c[1]}"/><path d="M30 71Q22 82 30 92T30 108" stroke="#fff" stroke-opacity=".6" fill="none"/><ellipse cx="19" cy="20" rx="5" ry="9" fill="#fff" opacity=".65" transform="rotate(25 19 20)"/></svg>`;
+ b.onclick=e=>{b.classList.add('pop');burst(e.clientX,e.clientY,30);setTimeout(()=>b.remove(),300);
+  const r=document.createElement('div');r.className='r';r.style.borderColor=c[1];r.innerHTML=`<small style="color:${c[1]}">REASON NO.${i+1} ♥</small><br>${t}`;$('rs').appendChild(r);
+  if(++popped==C.reasons.length)$('b2').style.display='inline-block'};$('bls').appendChild(b)});
+
+/* 3: photos */
+C.photos.forEach(p=>{const d=document.createElement('div');d.className='po';const im=new Image();im.src=p.s;
+ im.onerror=()=>{const x=document.createElement('div');x.className='ph';x.textContent='📷 '+p.s+' podu';im.replaceWith(x)};
+ d.appendChild(im);d.insertAdjacentHTML('beforeend',`<span>${p.c}</span>`);$('ph').appendChild(d)});
+
+/* 4: letter */
+let tm;
+function openLetter(){$('env').style.display='none';$('ep').style.display='none';const l=$('lt');l.style.display='block';let i=0;
+ tm=setInterval(()=>{l.textContent=C.letter.slice(0,++i);l.scrollTop=l.scrollHeight;if(i>=C.letter.length)end()},55)}
+function skipType(){clearInterval(tm);$('lt').textContent=C.letter;end()}
+function end(){clearInterval(tm);$('b4').style.display='inline-block'}
+
+/* 5: poem (Tamil) */
+function poem(){const m=$('pm');m.innerHTML='';C.poem.forEach((t,i)=>{const p=document.createElement('p');p.textContent=t;m.appendChild(p);setTimeout(()=>p.classList.add('v'),600+i*1500)});
+ setTimeout(()=>$('b5').style.display='inline-block',600+C.poem.length*1500)}
+
+/* audio: unlock + beep (countdown tick, gun sounds) */
+let AC;
+function ac(){try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state=='suspended')AC.resume()}catch(e){}return AC}
+['pointerdown','touchend','click'].forEach(e=>document.addEventListener(e,ac,true));
+function beep(f,f2,d,ty,v){const a=ac();if(!a)return;const o=a.createOscillator(),g=a.createGain(),t=a.currentTime;o.type=ty;o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(Math.max(f2,20),t+d);g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+d+.02)}
+
+/* 6: shooting game - ponnunga kitta irundhu kaapathu */
+const gcv=$('gcv'),g2=gcv.getContext('2d');let G,W,H,raf;
+function rr(x,y,w,h,r){g2.beginPath();g2.moveTo(x+r,y);g2.arcTo(x+w,y,x+w,y+h,r);g2.arcTo(x+w,y+h,x,y+h,r);g2.arcTo(x,y+h,x,y,r);g2.arcTo(x,y,x+w,y,r);g2.closePath()}
+function ov(t,p,b,f){$('got').textContent=t;$('gop').textContent=p;$('gob').textContent=b;$('gob').onclick=f;$('gov').style.display='flex'}
+function game(){cancelAnimationFrame(raf);G=null;$('gh').textContent='';ov('Kaapathu! 🔫',`${C.girls.length} ponnunga ennai un kitta irundhu pirichu kootitu poga varaanga! Tap panni shoot pannu, avangala vara vidaadha. 3 chance dhaan ❤️`,'Start 🔫',startGame)}
+function startGame(){const d=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;gcv.width=W*d;gcv.height=H*d;g2.setTransform(d,0,0,d,0,0);
+ G={on:1,q:[...C.girls].sort(()=>Math.random()-.5),en:[],bl:[],pt:[],tx:[],k:0,lv:3,t:0,nx:30,ax:W/2,ay:H*.35,dn:0,cd:0,fl:0,rc:0,sh:0,rd:0,gx:W/2,gy:H-100};
+ $('gov').style.display='none';hud();cancelAnimationFrame(raf);loop()}
+function hud(){$('gh').innerHTML=`🔫 Out: <b>${G.k}</b>/${C.girls.length} &nbsp; ${'❤️'.repeat(Math.max(G.lv,0))}`}
+function loop(){if(!G||!G.on)return;upd();drw();raf=requestAnimationFrame(loop)}
+function aimAt(e){if(!G)return;const r=gcv.getBoundingClientRect();G.ax=e.clientX-r.left;G.ay=e.clientY-r.top}
+gcv.onpointerdown=e=>{aimAt(e);if(G)G.dn=1;try{gcv.setPointerCapture(e.pointerId)}catch(x){}};
+gcv.onpointermove=aimAt;gcv.onpointerup=gcv.onpointercancel=()=>{if(G)G.dn=0};
+function gang(){return Math.max(-3,Math.min(-.14,G.ay<G.gy-10?Math.atan2(G.ay-G.gy,G.ax-G.gx):-1.57))}
+function shoot(){const a=gang(),c=Math.cos(a),s=Math.sin(a);G.bl.push({x:G.gx+c*52,y:G.gy+s*52,vx:c*16,vy:s*16});G.fl=3;G.rc=7;beep(300,60,.14,'sawtooth',.3);beep(1200,200,.05,'square',.1)}
+function boom(x,y){for(let i=0;i<24;i++)G.pt.push({x,y,vx:(Math.random()-.5)*8,vy:Math.random()*-6-1,l:30+Math.random()*20,c:['#ff6fae','#ffd34d','#fff','#ff4f9a'][i%4]})}
+function upd(){G.t++;
+ if(G.q.length&&--G.nx<=0){const nm=G.q.pop();g2.font='bold 15px system-ui';const w=g2.measureText('👩 '+nm).width+26;G.en.push({n:nm,w,x:w/2+10+Math.random()*(W-w-20),y:-20,v:(1.5+Math.random()*.9)*H/720,p:Math.random()*6});G.nx=48+Math.random()*40}
+ if(G.dn&&--G.cd<=0){shoot();G.cd=10}
+ G.fl--;G.rc=Math.max(0,G.rc-1);G.sh=Math.max(0,G.sh-1);
+ G.bl=G.bl.filter(b=>{b.x+=b.vx;b.y+=b.vy;return b.y>-20&&b.x>-20&&b.x<W+20});
+ G.en=G.en.filter(e=>{e.y+=e.v;e.x=Math.max(e.w/2,Math.min(W-e.w/2,e.x+Math.sin((G.t+e.p*20)/22)*.8));
+  const i=G.bl.findIndex(b=>Math.abs(b.x-e.x)<e.w/2+4&&Math.abs(b.y-e.y)<20);
+  if(i>-1){G.bl.splice(i,1);boom(e.x,e.y);G.tx.push({t:e.n+' out! 💥',x:e.x,y:e.y,l:50});beep(700,200,.15,'triangle',.4);G.k++;hud();return false}
+  if(e.y>G.gy-40){G.lv--;G.sh=14;G.rd=10;beep(160,50,.4,'sawtooth',.5);G.tx.push({t:'Enna kootitu poraa! 😭',x:W/2,y:G.gy-70,l:70});hud();if(G.lv<=0)lose();return false}
+  return true});
+ G.pt=G.pt.filter(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.25;return --p.l>0});G.tx=G.tx.filter(t=>{t.y-=.8;return --t.l>0});
+ if(G.on&&!G.q.length&&!G.en.length)win()}
+function drw(){const c=g2;c.save();c.clearRect(0,0,W,H);if(G.sh)c.translate((Math.random()-.5)*8,(Math.random()-.5)*8);
+ const gr=c.createLinearGradient(0,G.gy-60,0,H);gr.addColorStop(0,'#ff4f9a00');gr.addColorStop(1,'#ff4f9a66');c.fillStyle=gr;c.fillRect(0,G.gy-60,W,H);
+ c.strokeStyle='#ff7eb688';c.lineWidth=1.5;c.setLineDash([8,8]);c.beginPath();c.moveTo(0,G.gy-40);c.lineTo(W,G.gy-40);c.stroke();c.setLineDash([]);
+ c.textAlign='center';c.font='40px system-ui';c.fillText('🙋‍♂️',G.gx,H-34);c.font='bold 12px system-ui';c.fillStyle='#fff';c.fillText('Naan 💙',G.gx,H-10);
+ c.font='bold 15px system-ui';G.en.forEach(e=>{const g=c.createLinearGradient(0,e.y-15,0,e.y+15);g.addColorStop(0,'#ff6fae');g.addColorStop(1,'#b0245f');rr(e.x-e.w/2,e.y-15,e.w,30,15);c.fillStyle=g;c.fill();c.strokeStyle='#ffffff99';c.lineWidth=1.5;c.stroke();c.fillStyle='#fff';c.fillText('👩 '+e.n,e.x,e.y+5)});
+ c.lineCap='round';G.bl.forEach(b=>{c.strokeStyle='#fff3a8';c.lineWidth=3.5;c.beginPath();c.moveTo(b.x-b.vx*1.8,b.y-b.vy*1.8);c.lineTo(b.x,b.y);c.stroke()});
+ c.save();c.translate(G.gx,G.gy);c.rotate(gang());c.fillStyle='#4b4f5a';c.fillRect(-G.rc,-6,52,12);c.fillStyle='#9aa0ad';c.fillRect(-G.rc,-6,52,3);c.fillStyle='#2b2d35';c.fillRect(46-G.rc,-8,8,16);
+ if(G.fl>0){c.fillStyle='#ffd34d';c.beginPath();c.moveTo(56,0);c.lineTo(78,-11);c.lineTo(69,0);c.lineTo(78,11);c.closePath();c.fill()}
+ c.restore();c.fillStyle='#6b6f7b';c.beginPath();c.arc(G.gx,G.gy,20,0,6.3);c.fill();c.strokeStyle='#ff7eb6';c.lineWidth=3;c.stroke();
+ c.strokeStyle='#ffffffcc';c.lineWidth=2;c.beginPath();c.arc(G.ax,G.ay,14,0,6.3);c.moveTo(G.ax-20,G.ay);c.lineTo(G.ax-6,G.ay);c.moveTo(G.ax+6,G.ay);c.lineTo(G.ax+20,G.ay);c.moveTo(G.ax,G.ay-20);c.lineTo(G.ax,G.ay-6);c.moveTo(G.ax,G.ay+6);c.lineTo(G.ax,G.ay+20);c.stroke();
+ G.pt.forEach(p=>{c.fillStyle=p.c;c.fillRect(p.x,p.y,4,4)});
+ c.font='bold 16px system-ui';G.tx.forEach(t=>{c.globalAlpha=Math.min(1,t.l/20);c.fillStyle='#ffe27a';c.fillText(t.t,t.x,t.y)});c.globalAlpha=1;
+ if(G.rd>0){c.fillStyle='#ff000033';c.fillRect(0,0,W,H);G.rd--}
+ c.restore()}
+function win(){G.on=0;setTimeout(()=>{burst(W/2,H/3,250);fw(W/2,H/3);fw(W*.2,H/2);fw(W*.8,H/2)},200);const f=setInterval(()=>fw(60+Math.random()*(W-120),80+Math.random()*H*.5),500);setTimeout(()=>clearInterval(f),3500);
+ setTimeout(()=>ov('Congrats! 🎉',C.won,'Next 💍',next),900)}
+function lose(){G.on=0;setTimeout(()=>ov('Ayyo! 😭','Avanga ennai kootitu poitaanga… Marubadiyum try pannu, ennai kaapathu!','Retry 🔫',startGame),500)}
+
+/* 7: dog gif (close-up zoom) */
+(function(){const d=$('dg'),im=new Image();im.src=C.dog;im.style.transform=`scale(${C.zoom})`;
+ im.onerror=()=>{d.innerHTML='<div class="em">🐶💋</div>'};d.appendChild(im);$('dc').textContent="Oru kiss kuduthutu poraan… 😘"})();
+
+/* 8: proposal - NO odum, YES perusaagum */
+const no=$('no'),yes=$('yes');let n=0;
+const M=["Illaya? 😏 Pidi paakalam","Ada, pidikka mudiyalaye 😂","Innum try pannura? 🤭","Please aama nu sollu 🥺","Aama button perusaaguthu paaru 😜","Sari sari… aama sollidu 💖","Illa button-ku velai illa 😎"];
+function dodge(e){if(e){e.preventDefault&&e.preventDefault();e.stopPropagation&&e.stopPropagation()}
+ no.style.position='fixed';no.style.zIndex=70;
+ no.style.left=(10+Math.random()*(innerWidth-no.offsetWidth-20))+'px';no.style.top=(10+Math.random()*(innerHeight-no.offsetHeight-20))+'px';
+ $('msg').textContent=M[Math.min(n,M.length-1)];n++;yes.style.transform=`scale(${Math.min(1+n*.5,8)})`;if(n>=5)yes.style.zIndex=75;if(n>=9)no.style.pointerEvents='none';return false}
+['pointerdown','touchstart','mouseover','click'].forEach(ev=>no.addEventListener(ev,dodge,{passive:false}));
+let lt=0;document.addEventListener('pointermove',e=>{if(!$('sq').classList.contains('on')||Date.now()-lt<250)return;
+ const r=no.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);
+ if(Math.hypot(dx,dy)<90){lt=Date.now();dodge()}});
+function accept(){no.style.display='none';yes.style.transform='none';next();burst(innerWidth/2,innerHeight/3,150)}
+
+/* 9: cake (bun -> cream -> candle) */
+function cake(){const k=$('ck');k.className='';$('cm').textContent='Baking something sweet…';$('ct').textContent='First things first 🎂';
+ setTimeout(()=>k.classList.add('show'),300);
+ setTimeout(()=>{k.classList.add('lit');$('cm').textContent='Make a wish 🕯️ Candle-a thotu oodhu';burst(innerWidth/2,innerHeight/3,60)},2600)}
+$('ck').onclick=()=>{const k=$('ck');if(!k.classList.contains('lit')||k.classList.contains('off'))return;k.classList.add('off');$('cm').textContent='Wish pannitiya? 🥹';burst(innerWidth/2,innerHeight/2,250);setTimeout(next,2200)};
+
+/* galaxy: vaal natchathiram -> wish -> countdown -> voice */
+let xi;
+function mkStars(el,n){for(let i=0;i<n;i++){const s=document.createElement('i'),z=Math.random()*2+1;s.className='st';s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${z}px;height:${z}px;animation-duration:${2+Math.random()*4}s;animation-delay:${Math.random()*4}s`;el.appendChild(s)}}
+mkStars($('stars'),110);mkStars($('bs'),45);
+function tick(k){beep(k?1000:1500,k?800:1200,.08,'square',.55)}
+function galaxy(){clearInterval(xi);$('xt').textContent='Oru natchathiram varum… 🌠';$('xs').textContent='Adha thotu paaru ✨';$('cd').textContent='';$('vb').style.display='none';const s=$('ss');s.style.display='block';s.style.animation='none';void s.offsetWidth;s.style.animation=''}
+function wish(){const s=$('ss');if(s.style.display=='none')return;s.style.display='none';burst(innerWidth/2,innerHeight/3,150);$('xt').textContent='Make a wish ✨';$('xs').textContent='Manasula oru wish ninaichuko…';
+ setTimeout(()=>{$('xt').textContent='Kanna moodu 🙈';$('xs').textContent='Cheating pannaadha!';setTimeout(count,2600)},3200)}
+function count(){let n=10;bgm.volume=.3;$('cd').textContent=n;tick(1);xi=setInterval(()=>{n--;if(n>0){$('cd').textContent=n;tick(n%2)}else{clearInterval(xi);$('cd').textContent='';voice()}},1000)}
+function voice(){$('xt').textContent='🎧';$('xs').textContent='Kaadhu kodu…';bgm.volume=.12;let ok=0;const b=$('vb'),v=new Audio(C.voice),done=()=>{if(ok++)return;bgm.volume=1;next()},btn=(t,f)=>{b.textContent=t;b.onclick=f;b.style.display='inline-block'};
+ v.onended=done;v.onerror=()=>btn('Voice file kedaikala, Next ➜',done);
+ v.play().catch(()=>setTimeout(()=>{if(!v.error)btn('▶ Voice note kelu',()=>{b.style.display='none';v.play().catch(done)})},300))}
+
+/* 10: fireworks */
+function fire(){$('fin').textContent=C.final;fw(innerWidth/2,innerHeight/3);setInterval(()=>fw(60+Math.random()*(innerWidth-120),80+Math.random()*innerHeight*.5),650)}
+</script></body></html>
